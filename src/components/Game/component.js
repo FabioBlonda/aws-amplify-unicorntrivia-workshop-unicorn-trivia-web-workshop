@@ -65,7 +65,7 @@ class Game extends Component {
 						<input
 							className="username-prompt-input"
 							placeholder="Provide a username... then press enter"
-							onKeyPress={((e) => {
+							onKeyUp={((e) => {
 								if(e.key === "Enter" && e.target.value != ""){
 									this.setupClient(e.target.value);
 								}
