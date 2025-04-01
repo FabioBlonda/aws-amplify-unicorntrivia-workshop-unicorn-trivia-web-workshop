@@ -1,0 +1,41 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-unicorntrivia2-dev-81b13-authRole",
+      "UnauthRoleArn": "arn:aws:iam::339713065154:role/amplify-unicorntrivia2-dev-81b13-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::339713065154:role/amplify-unicorntrivia2-dev-81b13-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-unicorntrivia2-dev-81b13-deployment",
+      "UnauthRoleName": "amplify-unicorntrivia2-dev-81b13-unauthRole",
+      "StackName": "amplify-unicorntrivia2-dev-81b13",
+      "StackId": "arn:aws:cloudformation:eu-west-1:339713065154:stack/amplify-unicorntrivia2-dev-81b13/734f3fa0-0b2e-11f0-b451-0afcd6d45bab",
+      "AmplifyAppId": "d33aaqlospy0pv"
+    }
+  },
+  "api": {
+    "adminpanel-dev": {
+      "service": "AppSync",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY"
+          },
+          "additionalAuthenticationProviders": null
+        },
+        "GraphQLAPIIdOutput": "5rogbinctfazrdiuw6zth4ugdy",
+        "GraphQLAPIEndpointOutput": "https://sslhe7ftqvdz3f7w5uhjjeobdm.appsync-api.eu-west-1.amazonaws.com/graphql",
+        "name": "adminpanel-dev",
+        "region": "eu-west-1",
+        "GraphQLAPIKeyOutput": "da2-nirzx2l2zfgr7d5avqtap3hx3a"
+      },
+      "lastPushTimeStamp": "2025-03-27T17:15:48.832Z"
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "type": "cicd",
+      "lastPushTimeStamp": "2025-04-01T08:49:48.653Z"
+    }
+  }
+}
