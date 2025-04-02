@@ -9,8 +9,9 @@ import loser from '../../images/loser.png';
 import Video from '../Video';
 import Modal from '../Modal';
 import styles from './styles';
-import awsconfig from '../../amplifyconfiguration.json';
-Amplify.configure(awsconfig);
+import awsmobile from './../../aws-exports';
+
+Amplify.configure(awsmobile);
 
 class Game extends Component {
 	constructor(props){
@@ -39,22 +40,37 @@ class Game extends Component {
 	}
 
 	componentDidMount(){
-		this.listenForQuestions();
-		this.listenForAnswers();
+		try {
+			// Configure Amplify for this component
+			Amplify.configure(awsconfig);
+			this.listenForQuestions();
+			this.listenForAnswers();
+		} catch (error) {
+			console.error('Error in componentDidMount:', error);
+		}
 	}
 
-	setupClient = (username) => {
-		/* CODE GOES HERE */
-		API.graphql(
-			graphqlOperation(createAnswer, {input: {username: username}})
-		).then(((res) => {
-			this.setState({
-				username: res.data.createAnswer.username,
-				id: res.data.createAnswer.id
+	setupClient = async (username) => {
+		try {
+			const response = await API.graphql({
+				query: createAnswer,
+				variables: {
+					input: {
+						username: username
+					}
+				},
+				authMode: 'API_KEY' // Add this if you're using API key authentication
 			});
-		}).bind(this)).catch((err) => {
-			console.log("err: ", err);
-		});
+	
+			if (response.data.createAnswer) {
+				this.setState({
+					username: response.data.createAnswer.username,
+					id: response.data.createAnswer.id
+				});
+			}
+		} catch (error) {
+			console.error('Error setting up client:', error);
+		}
 	}
 
 	askForName = () => {
@@ -83,21 +99,34 @@ class Game extends Component {
 
 	listenForQuestions = () => {
 		/* CODE GOES HERE */
-		let self = this;
-		API.graphql(
-			graphqlOperation(onCreateQuestion)
-		).subscribe({
-			next: (data) => {
-				self.setState({
-					question: data.value.data,
-					answerAvailable: false,
-					questionAvailable: true,
-					modalVisible: true,
-					buttonsDisabled: false,
-					selectedAnswerButton: null
-				});
-			}
-		})
+		try {
+			const subscription = API.graphql({
+				query: onCreateQuestion,
+				authMode: 'API_KEY' // Add this if you're using API key authentication
+			}).subscribe({
+				next: (data) => {
+					if (data.value.data.onCreateQuestion) {
+						this.setState({
+							question: {
+								onCreateQuestion: data.value.data.onCreateQuestion
+							},
+							answerAvailable: false,
+							questionAvailable: true,
+							modalVisible: true,
+							buttonsDisabled: false,
+							selectedAnswerButton: null
+						});
+					}
+				},
+				error: (error) => {
+					console.error('Question subscription error:', error);
+				}
+			});
+	
+			this.questionSubscription = subscription;
+		} catch (error) {
+			console.error('Error setting up question subscription:', error);
+		}
 	}
 
 	listenForAnswers = () => {
@@ -121,30 +150,33 @@ class Game extends Component {
 
 	answerChosen = (index) => {
 		/* CODE GOES HERE */
-		let answer = this.state.question.onCreateQuestion.answers[index];
-		API.graphql(
-			graphqlOperation(
-				updateAnswer,
-				{ input: {
-					id: this.state.id,
-					answer: [index]
-				}}
-			)
-		).then((res) => {
-			console.log("successfully submitted answer");
-		}).catch((err) => {
-			console.log("err: ", err);
-		});
-		this.setState({
-			questionsAnswered: true,
-			selectedAnswerButton: index,
-			buttonsDisabled: true,
-			answerChosen: {
-				index: index,
-				answer: answer
-			},
-			questionCount: this.state.questionCount + 1
-		});
+		try {
+			const answer = this.state.question.onCreateQuestion.answers[index];
+			
+			API.graphql({
+				query: updateAnswer,
+				variables: {
+					input: {
+						id: this.state.id,
+						answer: [index]
+					}
+				},
+				authMode: 'API_KEY' // Add this if you're using API key authentication
+			});
+	
+			this.setState({
+				questionsAnswered: true,
+				selectedAnswerButton: index,
+				buttonsDisabled: true,
+				answerChosen: {
+					index: index,
+					answer: answer
+				},
+				questionCount: this.state.questionCount + 1
+			});
+		} catch (error) {
+			console.error('Error submitting answer:', error);
+		}
 	}
 
 	button = (index, answer) => {
