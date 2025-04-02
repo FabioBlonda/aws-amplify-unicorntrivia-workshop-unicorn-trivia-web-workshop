@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 //import './AnimatedTransition.css';
 
 class Modal extends Component {
