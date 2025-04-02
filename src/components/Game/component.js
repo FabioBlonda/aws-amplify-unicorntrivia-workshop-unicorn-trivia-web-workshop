@@ -9,10 +9,14 @@ import loser from '../../images/loser.png';
 import Video from '../Video';
 import Modal from '../Modal';
 import styles from './styles';
+import awsconfig from '../../amplifyconfiguration.json';
+Amplify.configure(awsconfig);
 
 class Game extends Component {
 	constructor(props){
 		super(props);
+		this.questionSubscription = null;
+    	this.answerSubscription = null;
 		this.state = {
 			modalVisible: false,
 			modalBackground: "#FFFFFF",
