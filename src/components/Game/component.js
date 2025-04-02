@@ -42,7 +42,7 @@ class Game extends Component {
 	componentDidMount(){
 		try {
 			// Configure Amplify for this component
-			Amplify.configure(awsconfig);
+			Amplify.configure(awsmobile);
 			this.listenForQuestions();
 			this.listenForAnswers();
 		} catch (error) {
