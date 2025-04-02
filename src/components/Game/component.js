@@ -47,7 +47,7 @@ class Game extends Component {
 
 	componentDidMount(){
 		try {
-			console.log('AppSync Config:', awsconfig);
+			console.log('AppSync Config:', awsmobile);
 			// Configure Amplify for this component
 			Amplify.configure(awsmobile);
 			this.listenForQuestions();
