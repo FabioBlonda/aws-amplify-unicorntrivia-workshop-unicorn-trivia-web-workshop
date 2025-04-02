@@ -1,7 +1,7 @@
 import React from 'react';
 import App from './component';
 import {Amplify} from 'aws-amplify';
-import config from './amplifyconfiguration.json';
+import config from './../../amplifyconfiguration.json';
 
 Amplify.configure(config);
 
