@@ -22,8 +22,13 @@ module.exports = {
 					outputPath: "images"
             	},
           	}]
+		},
+		{
+			test: /\.json$/,
+            type: 'json'
 		}]
   	},
+	
 	resolve: {
 		extensions: ['*', '.js', '.jsx']
 	},
