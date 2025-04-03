@@ -18,7 +18,7 @@ import styles from './styles';
     aws_appsync_apiKey: "da2-nirzx2l2zfgr7d5avqtap3hx3a"
 };*/
 
-Amplify.configure(awsmobile);
+Amplify.configure(awsconfig);
 
 class Game extends Component {
 	constructor(props){
@@ -48,9 +48,9 @@ class Game extends Component {
 
 	componentDidMount(){
 		try {
-			console.log('AppSync Config:', awsmobile);
+			console.log('AppSync Config:', awsconfig);
 			// Configure Amplify for this component
-			Amplify.configure(awsmobile);
+			Amplify.configure(awsconfig);
 			this.listenForQuestions();
 			this.listenForAnswers();
 		} catch (error) {
