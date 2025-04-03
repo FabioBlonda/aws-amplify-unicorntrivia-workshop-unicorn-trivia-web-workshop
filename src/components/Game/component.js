@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Amplify } from 'aws-amplify';
+import awsmobile from './../../aws-exports.js';
 import { API, graphqlOperation } from 'aws-amplify';
 import { print as gqlToString } from 'graphql/language';
 import { onCreateQuestion, onUpdateQuestion } from '../../graphql/subscriptions';
@@ -9,7 +10,7 @@ import loser from '../../images/loser.png';
 import Video from '../Video';
 import Modal from '../Modal';
 import styles from './styles';
-import awsmobile from './../../aws-exports.js';
+
 /*const awsconfig = {
     aws_appsync_graphqlEndpoint: "https://sslhe7ftqvdz3f7w5uhjjeobdm.appsync-api.eu-west-1.amazonaws.com/graphql",
     aws_appsync_region: "eu-west-1",
